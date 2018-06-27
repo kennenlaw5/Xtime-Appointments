@@ -17,14 +17,8 @@ function import(e) {
   }
   
   for (i = 0; i < arr.length-1; i++) {
-    if (arr[i][3] == "" && arr[i][6] == "") {
-      arr.splice(i, 1);
-      i--;
-    }
-    if (arr[i][7] == arr[i+1][7]) {
-      arr.splice(i+1, 1);
-      i--;
-    }
+    if (arr[i][3] == "" && arr[i][6] == "") { arr.splice(i, 1); i--; }
+    if (arr[i][7] == arr[i+1][7]) { arr.splice(i+1, 1); i--; }
   }
   
   target.getRange(3, 1, arr.length, 17).setValues(arr);
