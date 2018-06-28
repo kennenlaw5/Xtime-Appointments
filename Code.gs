@@ -1,5 +1,5 @@
 function import(e) {
-  // created by Sean Lowe
+  // created by Sean Lowe, 6/27/18
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var source = ss.getSheetByName("Raw");
   var target = e;
@@ -8,24 +8,18 @@ function import(e) {
   for (var i = 0; i < range.length; i++) {
     arr[i]=[];
     for (var j = 0; j < range[i].length; j++) {
-      arr[i][j] = range[i][j];      // appointment time
-      arr[i][j] = range[i][j];      // customer
-      arr[i][j] = range[i][j];      // vehicle
-      arr[i][j] = range[i][j];      // vin
-      arr[i][j] = range[i][j];      // client advisor
+      arr[i][j] = range[i][j];
     }
   }
-  
   for (i = 0; i < arr.length-1; i++) {
     if (arr[i][3] == "" && arr[i][6] == "") { arr.splice(i, 1); i--; }
     if (arr[i][7] == arr[i+1][7]) { arr.splice(i+1, 1); i--; }
   }
-  
   target.getRange(3, 1, arr.length, 17).setValues(arr);
 }
 
 function newSheet() {
-  // created by Sean Lowe
+  // created by Sean Lowe, /6/27/18
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var ui = SpreadsheetApp.getUi();
   var sheet = ss.getSheetByName('Master').copyTo(ss);
@@ -36,4 +30,9 @@ function newSheet() {
   sheet.setName(name.getResponseText());
   ss.setActiveSheet(sheet);
   import(sheet);
+}
+
+function summarize() {
+  // created by Sean Lowe, 6/28/18
+  
 }
