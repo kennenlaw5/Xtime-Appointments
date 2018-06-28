@@ -34,5 +34,5 @@ function newSheet() {
 
 function summarize() {
   // created by Sean Lowe, 6/28/18
-  
+  Logger.log("reached summarize");
 }

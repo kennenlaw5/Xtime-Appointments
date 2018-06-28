@@ -1,7 +1,9 @@
 function onOpen() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var ui = SpreadsheetApp.getUi();
-  ui.createMenu('Utilities').addSubMenu(ui.createMenu('Contact Kennen').addItem('By Phone','phoneKennen').addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
+  ui.createMenu('Utilities').addSubMenu(ui.createMenu('Contact Kennen').addItem('By Phone','phoneKennen')
+                                        .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet')
+                                        .addItem('Summarize Spreadsheet', 'summarize').addToUi();
 }
 
 function phoneKennen() {
