@@ -4,6 +4,7 @@ function onOpen() {
   ui.createMenu('Utilities').addSubMenu(ui.createMenu('Contact Kennen').addItem('By Phone','phoneKennen')
                                         .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
                                         //.addItem('Summarize Spreadsheet', 'summarize').addToUi();
+  ss.getSheetByName("Master").hideSheet();
 }
 
 function phoneKennen() {
