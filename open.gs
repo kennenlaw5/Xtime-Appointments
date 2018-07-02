@@ -20,3 +20,9 @@ function emailKennen() {
     Logger.log('User cancelled');
   }
 }
+
+function formUpdate() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheets = ss.getSheets();
+  var sheet = ss.getSheetByName("")
+}

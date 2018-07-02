@@ -36,11 +36,11 @@ function newSheet() {
     sheet = ss.getSheetByName(name.getResponseText());
     ss.setActiveSheet(sheet);
     sheet.getRange(1, 28).setValue("=summarize(Q2:W,\"" + name.getResponseText() + "\")");
-    formulas = ss.getSheetByName("Summary").getRange(14, 5, 1, 3).getFormulas();
+    formulas = ss.getSheetByName("Summary").getRange(5, 5, 1, 3).getFormulas();
     for (var i = 0; i < formulas[0].length; i++) {
       formulas[0][i] = formulas[0][i].split(")")[0] + ",'" + name.getResponseText() + "'!$AB" + (i+1) + ")";
     }
-    ss.getSheetByName("Summary").getRange(14, 5, 1, 3).setValues(formulas);
+    ss.getSheetByName("Summary").getRange(5, 5, 1, 3).setValues(formulas);
     import(sheet);
   }
 }
@@ -83,10 +83,20 @@ function newMonth() {
   var name;
   for (var i = 0; i < sheets.length; i++) {
     name = sheets[i].getName().toLowerCase();
-    Logger.log(name)
-    if (name != "summary" || name != "master" || name != "raw") {
-    //  ss.deleteSheet(sheets[i]);
-      Logger.log("Reached inside 'delete' if");
+    Logger.log("current sheet name is " + name);
+    if (name != "summary") {
+      Logger.log("inside != summary");
+      if (name != "master") {
+        Logger.log("inside != master");
+        if (name != "raw") {
+          Logger.log("inside != raw");
+          if (name != "list") {
+            Logger.log("inside != list");
+            Logger.log("able to delete current sheet: " + name);
+            //  ss.deleteSheet(sheets[i]);
+          }
+        }
+      }
     }
   }
 }
