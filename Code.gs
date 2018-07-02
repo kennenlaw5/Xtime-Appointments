@@ -84,19 +84,9 @@ function newMonth() {
   for (var i = 0; i < sheets.length; i++) {
     name = sheets[i].getName().toLowerCase();
     Logger.log("current sheet name is " + name);
-    if (name != "summary") {
-      Logger.log("inside != summary");
-      if (name != "master") {
-        Logger.log("inside != master");
-        if (name != "raw") {
-          Logger.log("inside != raw");
-          if (name != "list") {
-            Logger.log("inside != list");
-            Logger.log("able to delete current sheet: " + name);
-            //  ss.deleteSheet(sheets[i]);
-          }
-        }
-      }
+    if (name != "summary" && name != "master" && name != "raw" && name != "list") {          
+      Logger.log("able to delete current sheet: " + name);
+      //  ss.deleteSheet(sheets[i]);
     }
   }
 }

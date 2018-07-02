@@ -24,5 +24,16 @@ function emailKennen() {
 function formUpdate() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheets = ss.getSheets();
-  var sheet = ss.getSheetByName("")
+  var sheet = ss.getSheetByName("Summary");
+  var formulas = ss.getRange(5, 5, 1, 3).getFormulas();
+  var updated = [];
+  for (var i = 0; i < formulas[0].length; i++) {
+    updated[i] = "=SUM(";
+    for (var j = 0; j < sheets.length; j++) {
+      
+      updated[i] = "'" + sheets[j].getSheetName();
+    }
+    updated[i] += formulas[0][i].split(")")[0] + ",'" + name.getResponseText() + "'!$AB" + (i+1) + ")";
+  }
+  
 }
