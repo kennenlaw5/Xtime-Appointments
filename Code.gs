@@ -86,7 +86,7 @@ function newMonth() {
     Logger.log("current sheet name is " + name);
     if (name != "summary" && name != "master" && name != "raw" && name != "list") {          
       Logger.log("able to delete current sheet: " + name);
-      //  ss.deleteSheet(sheets[i]);
+      ss.deleteSheet(sheets[i]);
     }
   }
 }
