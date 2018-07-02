@@ -77,6 +77,18 @@ function summarize(x, sheetName) {
   //Logger.log("i = " + i);
 }
 
+function newMonth() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheets = ss.getSheets();
+  var name;
+  for (var i = 0; i < sheets.length; i++) {
+    name = sheets[i].getName().toLowerCase();
+    if (name != "summary" || name != "master" || name != "raw") {
+      ss.deleteSheet(sheets[i]);
+    }
+  }
+}
+
 //                                        0  1  2  3  4  5  6  7
 //                                        |  X  X  C  T  S  UP IP
 // a b c d e f g h i j  k  l  m  n  o  p  q  r  s  t  u  v   w  x  y  z  aa ab
