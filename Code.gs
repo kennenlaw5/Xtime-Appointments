@@ -83,8 +83,10 @@ function newMonth() {
   var name;
   for (var i = 0; i < sheets.length; i++) {
     name = sheets[i].getName().toLowerCase();
+    Logger.log(name)
     if (name != "summary" || name != "master" || name != "raw") {
-      ss.deleteSheet(sheets[i]);
+    //  ss.deleteSheet(sheets[i]);
+      Logger.log("Reached inside 'delete' if");
     }
   }
 }
