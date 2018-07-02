@@ -27,7 +27,7 @@ function newSheet() {
   // created by Sean Lowe, 6/27/18
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var ui = SpreadsheetApp.getUi();
-  var sheet, formulas;
+  var sheet;
   var name = ui.prompt("Name of New Sheet", "Enter the date of the sheet you are creating (M/DD)", ui.ButtonSet.OK_CANCEL);
   if (name.getSelectedButton() == ui.Button.OK) {
     //var name = "test"; // uncomment this and the line under it for testing purposes
@@ -36,11 +36,7 @@ function newSheet() {
     sheet = ss.getSheetByName(name.getResponseText());
     ss.setActiveSheet(sheet);
     sheet.getRange(1, 28).setValue("=summarize(Q2:W,\"" + name.getResponseText() + "\")");
-    formulas = ss.getSheetByName("Summary").getRange(5, 5, 1, 3).getFormulas();
-    for (var i = 0; i < formulas[0].length; i++) {
-      formulas[0][i] = formulas[0][i].split(")")[0] + ",'" + name.getResponseText() + "'!$AB" + (i+1) + ")";
-    }
-    ss.getSheetByName("Summary").getRange(5, 5, 1, 3).setValues(formulas);
+    formUpdate();
     import(sheet);
   }
 }

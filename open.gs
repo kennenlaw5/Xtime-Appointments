@@ -2,8 +2,8 @@ function onOpen() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('Utilities').addSubMenu(ui.createMenu('Contact Kennen').addItem('By Phone','phoneKennen')
-                                        .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet')
-                                        .addItem('Summarize Spreadsheet', 'summarize').addToUi();
+                                        .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
+                                        //.addItem('Summarize Spreadsheet', 'summarize').addToUi();
 }
 
 function phoneKennen() {
@@ -39,5 +39,6 @@ function formUpdate() {
       }
     }
   }
+  if (sheets.length == 4) { updated[0] += ")"; updated[1] += ")"; updated[2] += ")"; }
   sheet.getRange(5, 5, 1, 3).setValues([updated]);
 }
