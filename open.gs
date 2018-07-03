@@ -16,7 +16,8 @@ function emailKennen() {
   var ui = SpreadsheetApp.getUi();
   var input = ui.prompt('Email Sheet Creator','Describe the issue you\'re having in the box below, then press "Ok" to submit your issue via email:',ui.ButtonSet.OK_CANCEL);
   if (input.getSelectedButton() == ui.Button.OK) {
-    MailApp.sendEmail('kennen.lawrence@schomp.com','HELP Xtime Appointments',input.getResponseText());
+    MailApp.sendEmail('kennen.lawrence@a2zsync.com','HELP Xtime Appointments',input.getResponseText()+"\n\n\nhttps://docs.google.com/spreadsheets/d/1xdS_MC3ZSGwZENtMQAHRETeWlE8pIY3zaCPOS1xgwHs/edit#gid=1629835607");
+    SpreadsheetApp.getActiveSpreadsheet().toast('Email sent successfully! We will get back to you as quick as possible!', 'Success!')
   } else if (input.getSelectedButton() == ui.Button.CANCEL) {
     Logger.log('User cancelled');
   }

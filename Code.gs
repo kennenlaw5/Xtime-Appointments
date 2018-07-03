@@ -44,6 +44,7 @@ function newSheet() {
 function summarize(x, sheetName) {
   // created by Sean Lowe, 6/29/18
   //Logger.log("reached summarize");
+  //sheetName = "7/4";
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = null;
   var source = ss.getSheetByName(sheetName);
@@ -53,7 +54,7 @@ function summarize(x, sheetName) {
   
   var range = source.getRange(2, 17, source.getLastRow()-1, source.getLastColumn()-17).getValues();
   for (var i = 0; i < range.length; i++) {
-    if (range[i][0] == "" && range[i+1][0] == "" && range[i+2][0] == "") { break; }
+    if ((range[i] == undefined || range[i][0] == "") && (range[i+1] == undefined || range[i+1][0] == "") && (range[i+2] == undefined || range[i+2][0] == "")) { break; }
     if (range[i][6].toLowerCase() == "yes") {
      updated++;
       //Logger.log("reached updated increment");
