@@ -27,20 +27,23 @@ function formUpdate() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheets = ss.getSheets();
   var sheet = ss.getSheetByName("Summary");
-  var formulas = sheet.getRange(5, 5, 1, 3).getFormulas();
+  var formulas = sheet.getRange(5, 5, 1, 6).getFormulas();
   var updated = []; var first = true; var current;
   for (var i = 0; i < formulas[0].length; i++) {
-    updated[i] = "=SUM(";
-    first = true;
-    for (var j = 0; j < sheets.length; j++) {
-      current = sheets[j].getSheetName().toLowerCase();
-      if (current != "summary" && current != "master" && current != "raw" && current != "list") {
-        if (first) { updated[i] += "'" + sheets[j].getSheetName() + "'!$AB" + (i+1); first=false; }
-        else { updated[i] += ",'" + sheets[j].getSheetName() + "'!$AB" + (i+1); }
-        if (j+1 >= sheets.length) { updated[i] += ")"; }
+    if (i == 2) { updated[i]=formulas[0][2]; }
+    else {
+      updated[i] = "=SUM(";
+      first = true;
+      for (var j = 0; j < sheets.length; j++) {
+        current = sheets[j].getSheetName().toLowerCase();
+        if (current != "summary" && current != "master" && current != "raw" && current != "list") {
+          if (first) { updated[i] += "'" + sheets[j].getSheetName() + "'!$AB" + (i+1); first=false; }
+          else { updated[i] += ",'" + sheets[j].getSheetName() + "'!$AB" + (i+1); }
+          if (j+1 >= sheets.length) { updated[i] += ")"; }
+        }
       }
     }
   }
   if (sheets.length == 4) { updated[0] += ")"; updated[1] += ")"; updated[2] += ")"; }
-  sheet.getRange(5, 5, 1, 3).setValues([updated]);
+  sheet.getRange(5, 5, 1, 6).setValues([updated]);
 }
