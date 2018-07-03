@@ -50,7 +50,10 @@ function summarize(x, sheetName) {
   var source = ss.getSheetByName(sheetName);
   var updated = 0;
   var contacted = 0;
-  var turns = 0;
+  //var turns = 0;
+  var mp = 0;
+  var esc = 0;
+  var car = 0;
   
   var range = source.getRange(2, 17, source.getLastRow()-1, source.getLastColumn()-17).getValues();
   for (var i = 0; i < range.length; i++) {
@@ -62,12 +65,23 @@ function summarize(x, sheetName) {
         contacted++;
         //Logger.log("reached contacted increment");
         if (range[i][4].toLowerCase() != "" && range[i][4].toLowerCase() != "n/a") {
-          turns++;
+          //turns++;
+          var current = range[i][4].toUpperCase();
+          Logger.log(current);
+          if (current == "MP & ESC") {
+            mp++; esc++;
+          } else if (current == "MP") {
+            mp++;
+          } else if (current == "ESC") {
+            esc++;
+          } else if (current == "CAR") {
+            car++;
+          }
         }
       }
     }
   }
-  return [[updated],[contacted],[turns]];
+  return [[updated],[contacted],[mp],[esc],[car]];
   //Logger.log("updated = " + updated);
   //Logger.log("contacted = " + contacted);
   //Logger.log("turns = " + turns);
