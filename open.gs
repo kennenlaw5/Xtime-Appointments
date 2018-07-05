@@ -28,11 +28,11 @@ function formUpdate() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheets = ss.getSheets();
   var sheet = ss.getSheetByName("Summary");
-  var formulas = sheet.getRange(5, 3, 1, 7).getFormulas();
+  var formulas = sheet.getRange(5, 2, 1, 7).getFormulas();
   var updated = []; var first = true; var current;
   for (var i = 0; i < formulas[0].length; i++) {
     if (i == 3) { updated[i]=formulas[0][i]; }
-    else {
+    else if (i < 3) {
       updated[i] = "=SUM(";
       first = true;
       for (var j = 0; j < sheets.length; j++) {
@@ -44,7 +44,19 @@ function formUpdate() {
         }
       }
     }
+    else{
+      updated[i] = "=SUM(";
+      first = true;
+      for (var j = 0; j < sheets.length; j++) {
+        current = sheets[j].getSheetName().toLowerCase();
+        if (current != "summary" && current != "master" && current != "raw" && current != "list") {
+          if (first) { updated[i] += "'" + sheets[j].getSheetName() + "'!$AB" + (i); first=false; }
+          else { updated[i] += ",'" + sheets[j].getSheetName() + "'!$AB" + (i); }
+          if (j+1 >= sheets.length) { updated[i] += ")"; }
+        }
+      }
+    }
   }
   if (sheets.length == 4) { updated[0] += ")"; updated[1] += ")"; updated[2] += ")"; }
-  sheet.getRange(5, 3, 1, 7).setValues([updated]);
+  sheet.getRange(5, 2, 1, 7).setValues([updated]);
 }
