@@ -35,7 +35,7 @@ function newSheet() {
     ss.getSheetByName('Master').copyTo(ss).setName(name.getResponseText());
     sheet = ss.getSheetByName(name.getResponseText());
     ss.setActiveSheet(sheet);
-    sheet.getRange(1, 28).setValue("=summarize(Q2:W,\"" + name.getResponseText() + "\")");
+    sheet.getRange(2, 28).setValue("=summarize(Q2:W,\"" + name.getResponseText() + "\")");
     formUpdate();
     import(sheet);
   }

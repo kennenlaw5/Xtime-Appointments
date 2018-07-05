@@ -5,6 +5,7 @@ function onOpen() {
                                         .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
                                         //.addItem('Summarize Spreadsheet', 'summarize').addToUi();
   ss.getSheetByName("Master").hideSheet();
+  formUpdate();
 }
 
 function phoneKennen() {
@@ -27,10 +28,10 @@ function formUpdate() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheets = ss.getSheets();
   var sheet = ss.getSheetByName("Summary");
-  var formulas = sheet.getRange(5, 5, 1, 6).getFormulas();
+  var formulas = sheet.getRange(5, 3, 1, 7).getFormulas();
   var updated = []; var first = true; var current;
   for (var i = 0; i < formulas[0].length; i++) {
-    if (i == 2) { updated[i]=formulas[0][2]; }
+    if (i == 3) { updated[i]=formulas[0][i]; }
     else {
       updated[i] = "=SUM(";
       first = true;
@@ -45,5 +46,5 @@ function formUpdate() {
     }
   }
   if (sheets.length == 4) { updated[0] += ")"; updated[1] += ")"; updated[2] += ")"; }
-  sheet.getRange(5, 5, 1, 6).setValues([updated]);
+  sheet.getRange(5, 3, 1, 7).setValues([updated]);
 }
