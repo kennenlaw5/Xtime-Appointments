@@ -94,7 +94,7 @@ function newMonth() {
   for (var i = 0; i < sheets.length; i++) {
     name = sheets[i].getName().toLowerCase();
     //Logger.log("current sheet name is " + name);
-    if (name != "summary" && name != "master" && name != "raw" && name != "list") {          
+    if (name != "summary" && name != "master" && name != "raw" && name != "list" && name != "calc") {          
       //Logger.log("able to delete current sheet: " + name);
       ss.deleteSheet(sheets[i]);
     }
