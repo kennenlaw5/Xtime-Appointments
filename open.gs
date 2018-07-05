@@ -5,6 +5,7 @@ function onOpen() {
                                         .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
                                         //.addItem('Summarize Spreadsheet', 'summarize').addToUi();
   ss.getSheetByName("Master").hideSheet();
+  ss.getSheetByName("calc").hideSheet();
   formUpdate();
 }
 
