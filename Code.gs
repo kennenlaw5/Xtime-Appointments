@@ -18,6 +18,8 @@ function import(target) {
     }
   }
   for (i = 0; i < arr.length-1; i++) {
+    str = arr[i][6].split("/");
+    if ( (str[0] == "2017" || str[0] == "2018" || str[0] == "2019") || str[1] != "BMW") { arr.splice(i, 1); i--; }
     if (arr[i][7] == arr[i+1][7]) { arr.splice(i+1, 1); i--; }
   }
   target.getRange(2, 1, arr.length, 17).setValues(arr);
