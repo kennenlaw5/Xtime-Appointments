@@ -5,6 +5,7 @@ function import(target) {
   var range = source.getRange(1, 1, source.getLastRow(), 17).getValues();
   var arr = [];
   var count = 0;
+  var check = false;
   for (var i = 0; i < range.length; i++) {
     if (range[i][0]=="" && range[i+1][0] == "" && range[i+2][0] == "") { break; }
     else {
@@ -17,10 +18,17 @@ function import(target) {
       }
     }
   }
+  range = ss.getSheetByName("List").getRange(2, 25, 5).getValues();
   for (i = 0; i < arr.length-1; i++) {
+    check = true;
     str = arr[i][6].split("/");
-    if ( (str[0] == "2017" || str[0] == "2018" || str[0] == "2019") || str[1] != "BMW") { arr.splice(i, 1); i--; }
-    else if (arr[i][7] == arr[i+1][7]) { arr.splice(i+1, 1); i--; }
+    for (var j = 0; j < range.length; j++) {
+      if ( str[0] == range[j][0] ) { arr.splice(i, 1); i--; check = false;}
+    }
+    if (check) {
+      if (str[1] != "BMW") { arr.splice(i, 1); i--; }
+      else if (arr[i][7] == arr[i+1][7] && arr[i][7] != "") { arr.splice(i+1, 1); i--; }
+    }
   }
   target.getRange(2, 1, arr.length, 17).setValues(arr);
 }
