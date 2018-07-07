@@ -18,7 +18,7 @@ function import(target) {
       }
     }
   }
-  range = ss.getSheetByName("List").getRange(2, 25, 5).getValues();
+  range = ss.getSheetByName("List").getRange(2, 26, 5).getValues();
   for (i = 0; i < arr.length-1; i++) {
     check = true;
     str = arr[i][6].split("/");
