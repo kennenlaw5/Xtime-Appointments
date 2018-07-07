@@ -5,6 +5,7 @@ function onOpen() {
                                         .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
                                         //.addItem('Summarize Spreadsheet', 'summarize').addToUi();
   ss.getSheetByName("Master").hideSheet();
+  ss.getSheetByName("calc").hideSheet();
   formUpdate();
 }
 
@@ -37,7 +38,7 @@ function formUpdate() {
       first = true;
       for (var j = 0; j < sheets.length; j++) {
         current = sheets[j].getSheetName().toLowerCase();
-        if (current != "summary" && current != "master" && current != "raw" && current != "list") {
+        if (current != "summary" && current != "master" && current != "raw" && current != "list" && current != "calc") {
           if (first) { updated[i] += "'" + sheets[j].getSheetName() + "'!$AB" + (i+1); first=false; }
           else { updated[i] += ",'" + sheets[j].getSheetName() + "'!$AB" + (i+1); }
           if (j+1 >= sheets.length) { updated[i] += ")"; }
@@ -49,7 +50,7 @@ function formUpdate() {
       first = true;
       for (var j = 0; j < sheets.length; j++) {
         current = sheets[j].getSheetName().toLowerCase();
-        if (current != "summary" && current != "master" && current != "raw" && current != "list") {
+        if (current != "summary" && current != "master" && current != "raw" && current != "list" && current != "calc") {
           if (first) { updated[i] += "'" + sheets[j].getSheetName() + "'!$AB" + (i); first=false; }
           else { updated[i] += ",'" + sheets[j].getSheetName() + "'!$AB" + (i); }
           if (j+1 >= sheets.length) { updated[i] += ")"; }

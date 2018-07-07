@@ -5,6 +5,7 @@ function import(target) {
   var range = source.getRange(1, 1, source.getLastRow(), 17).getValues();
   var arr = [];
   var count = 0;
+  var check = false;
   for (var i = 0; i < range.length; i++) {
     if (range[i][0]=="" && range[i+1][0] == "" && range[i+2][0] == "") { break; }
     else {
@@ -17,8 +18,17 @@ function import(target) {
       }
     }
   }
+  range = ss.getSheetByName("List").getRange(2, 25, 5).getValues();
   for (i = 0; i < arr.length-1; i++) {
-    if (arr[i][7] == arr[i+1][7]) { arr.splice(i+1, 1); i--; }
+    check = true;
+    str = arr[i][6].split("/");
+    for (var j = 0; j < range.length; j++) {
+      if ( str[0] == range[j][0] ) { arr.splice(i, 1); i--; check = false;}
+    }
+    if (check) {
+      if (str[1] != "BMW") { arr.splice(i, 1); i--; }
+      else if (arr[i][7] == arr[i+1][7] && arr[i][7] != "") { arr.splice(i+1, 1); i--; }
+    }
   }
   target.getRange(2, 1, arr.length, 17).setValues(arr);
 }
@@ -94,12 +104,17 @@ function newMonth() {
   for (var i = 0; i < sheets.length; i++) {
     name = sheets[i].getName().toLowerCase();
     //Logger.log("current sheet name is " + name);
-    if (name != "summary" && name != "master" && name != "raw" && name != "list") {          
+    if (name != "summary" && name != "master" && name != "raw" && name != "list" && name != "calc") {          
       //Logger.log("able to delete current sheet: " + name);
       ss.deleteSheet(sheets[i]);
     }
   }
   formUpdate();
+}
+
+function refresh(){
+  SpreadsheetApp.getActiveSpreadsheet().getSheetByName("calc").getRange("F16").setValue(
+    SpreadsheetApp.getActiveSpreadsheet().getSheetByName("calc").getRange("F16").getValue()+1);
 }
 
 //                                        0  1  2  3  4  5  6   7  8  9
