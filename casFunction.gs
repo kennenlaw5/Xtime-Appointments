@@ -244,6 +244,7 @@ function cas4(x,y) {
 }
 function calc(a,b,c,d) {
   var all = [a,b,c,d];
+  for(var i=0;i<all.length;i++){if(all[i][0][0]=="Loading..."){Logger.log("Loading : "+(i+1));return "Loading...";}}
   var final = [];
   var check = false;
   for (var i = 0; i < all.length; i++) {
