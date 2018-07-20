@@ -1,8 +1,8 @@
 function onOpen() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var ui = SpreadsheetApp.getUi();
-  ui.createMenu('Utilities').addSubMenu(ui.createMenu('Contact Kennen').addItem('By Phone','phoneKennen')
-                                        .addItem('By Email','emailKennen')).addItem('Create New Sheet', 'newSheet').addToUi();
+  ui.createMenu('Utilities').addSubMenu(ui.createMenu('Help').addItem('By Phone','phoneKennen')
+                                        .addItem('By Email','emailKennen')).addItem('Refresh', 'formUpdate').addItem('Create New Sheet', 'newSheet').addToUi();
                                         //.addItem('Summarize Spreadsheet', 'summarize').addToUi();
   ss.getSheetByName("Master").hideSheet();
   ss.getSheetByName("calc").hideSheet();
