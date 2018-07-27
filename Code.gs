@@ -6,6 +6,7 @@ function import(target) {
   var arr = [];
   var count = 0;
   var check = false;
+  var str;
   for (var i = 0; i < range.length; i++) {
     if (range[i][0]=="" && range[i+1][0] == "" && range[i+2][0] == "") { break; }
     else {
@@ -23,11 +24,12 @@ function import(target) {
     check = true;
     str = arr[i][6].split("/");
     for (var j = 0; j < range.length; j++) {
-      if ( str[0] == range[j][0] ) { arr.splice(i, 1); i--; check = false;}
+      if ( str[0] == range[j][0] ) { arr.splice(i, 1); i--; check = false; } // remove model-years on 'list'
     }
     if (check) {
       if (str[1] != "BMW") { arr.splice(i, 1); i--; }
-      else if (arr[i][7] == arr[i+1][7] && arr[i][7] != "") { arr.splice(i+1, 1); i--; }
+      else if (arr[i][3] == arr[i+1][3] && arr[i][3] != "") { arr.splice(i+1, 1); i--; } // remove appointments whose names are the same
+      else if (arr[i][7] == arr[i+1][7] && arr[i][7] != "") { arr.splice(i+1, 1); i--; } // remove non-BMW appointments
     }
   }
   target.getRange(2, 1, arr.length, 17).setValues(arr);
