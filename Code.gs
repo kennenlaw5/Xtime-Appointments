@@ -27,9 +27,9 @@ function import(target) {
       if ( str[0] == range[j][0] ) { arr.splice(i, 1); i--; check = false; } // remove model-years on 'list'
     }
     if (check) {
-      if (str[1] != "BMW") { arr.splice(i, 1); i--; }
+      if (str[1] != "BMW") { arr.splice(i, 1); i--; } // remove non-BMW appointments
       else if (arr[i][3] == arr[i+1][3] && arr[i][3] != "") { arr.splice(i+1, 1); i--; } // remove appointments whose names are the same
-      else if (arr[i][7] == arr[i+1][7] && arr[i][7] != "") { arr.splice(i+1, 1); i--; } // remove non-BMW appointments
+      else if (arr[i][7] == arr[i+1][7] && arr[i][7] != "") { arr.splice(i+1, 1); i--; } // remove duplicate VIN appointments
     }
   }
   target.getRange(2, 1, arr.length, 17).setValues(arr);
