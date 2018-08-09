@@ -45,7 +45,7 @@ function newSheet() {
     name = ui.prompt("Name of New Sheet", "Enter the date of the sheet you are creating (M/DD)", ui.ButtonSet.OK_CANCEL);
     if (name.getSelectedButton() == ui.Button.OK) {
       name=name.getResponseText();
-      name.replace("-","/");name.replace("-","/");//These are DIFFERENT. Leave BOTH!
+      name=name.replace("-","/");name=name.replace("-","/");//These are DIFFERENT. Leave BOTH!
       if(name.split("/").length!=2){ ui.alert('Error', 'Please enter the date in the format M/DD', ui.ButtonSet.OK); }
       else if(parseInt(name.split("/")[0])<1 || parseInt(name.split("/")[0])>12){ ui.alert('Error', 'Please enter a valid month (1-12).', ui.ButtonSet.OK); }
       else if(name.split("/")[0].length>1 && parseInt(name.split("/")[0])!=12){ ui.alert('Error', 'Please enter the month in the format M/DD. Do not include a leading zero.', ui.ButtonSet.OK); }
