@@ -40,17 +40,32 @@ function newSheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var ui = SpreadsheetApp.getUi();
   var sheet;
-  var name = ui.prompt("Name of New Sheet", "Enter the date of the sheet you are creating (M/DD)", ui.ButtonSet.OK_CANCEL);
-  if (name.getSelectedButton() == ui.Button.OK) {
-    //var name = "test"; // uncomment this and the line under it for testing purposes
-    //sheet.setName(name);
-    ss.getSheetByName('Master').copyTo(ss).setName(name.getResponseText());
-    sheet = ss.getSheetByName(name.getResponseText());
-    ss.setActiveSheet(sheet);
-    sheet.getRange(2, 28).setValue("=summarize(Q2:W,\"" + name.getResponseText() + "\")");
-    formUpdate();
-    import(sheet);
+  var name;var check=false;
+  while(!check){
+    name = ui.prompt("Name of New Sheet", "Enter the date of the sheet you are creating (M/DD)", ui.ButtonSet.OK_CANCEL);
+    if (name.getSelectedButton() == ui.Button.OK) {
+      name=name.getResponseText();
+      name.replace("-","/");name.replace("-","/");//These are DIFFERENT. Leave BOTH!
+      if(name.split("/").length!=2){ ui.alert('Error', 'Please enter the date in the format M/DD', ui.ButtonSet.OK); }
+      else if(parseInt(name.split("/")[0])<1 || parseInt(name.split("/")[0])>12){ ui.alert('Error', 'Please enter a valid month (1-12).', ui.ButtonSet.OK); }
+      else if(name.split("/")[0].length>1 && parseInt(name.split("/")[0])!=12){ ui.alert('Error', 'Please enter the month in the format M/DD. Do not include a leading zero.', ui.ButtonSet.OK); }
+      else if(parseInt(name.split("/")[1])<1 || parseInt(name.split("/")[1])>31){ ui.alert('Error', 'Please enter a valid day (1-31).', ui.ButtonSet.OK); }
+      else if(ss.getSheetByName(name)!=null){
+        sheet=ui.alert('Error', 'The sheet "'+name+'" already exists. Would you like to override the old sheet?', ui.ButtonSet.YES_NO_CANCEL);
+        if(sheet==ui.Button.YES){ ss.deleteSheet(ss.getSheetByName(name)); }
+        if(sheet==ui.Button.CANCEL){ ss.toast('Action cancelled. No sheets were created. No sheets were overridden.', 'Action cancelled'); return; }
+      }
+      else{ check=true; }
+    }else { ss.toast('Action cancelled. No sheets were created.', 'Action cancelled'); return; }
   }
+  //var name = "test"; // uncomment this and the line under it for testing purposes
+  //sheet.setName(name);
+  ss.getSheetByName('Master').copyTo(ss).setName(name);
+  sheet = ss.getSheetByName(name);
+  ss.setActiveSheet(sheet);
+  sheet.getRange(2, 28).setValue("=summarize(Q2:W,\"" + name + "\")");
+  import(sheet);
+  formUpdate();
 }
 
 function summarize(x, sheetName) {
