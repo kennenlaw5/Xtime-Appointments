@@ -7,6 +7,7 @@ function onOpen() {
   ss.getSheetByName("Master").hideSheet();
   ss.getSheetByName("calc").hideSheet();
   formUpdate();
+  soldUpdate();
 }
 
 function phoneKennen() {
@@ -31,6 +32,7 @@ function formUpdate() {
   var sheet = ss.getSheetByName("Summary");
   var formulas = sheet.getRange(5, 2, 1, 7).getFormulas();
   var updated = []; var first = true; var current;
+  
   for (var i = 0; i < formulas[0].length; i++) {
     if (i == 3) { updated[i]=formulas[0][i]; }
     else if (i < 3) {
@@ -45,7 +47,7 @@ function formUpdate() {
         }
       }
     }
-    else{
+    else {
       updated[i] = "=SUM(";
       first = true;
       for (var j = 0; j < sheets.length; j++) {
@@ -61,3 +63,52 @@ function formUpdate() {
   if (sheets.length == 4) { updated[0] += ")"; updated[1] += ")"; updated[2] += ")"; }
   sheet.getRange(5, 2, 1, 7).setValues([updated]);
 }
+
+function soldUpdate() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheets = ss.getSheets();
+  var sheet = ss.getSheetByName("Summary");
+  var formulas = sheet.getRange(9, 6, 1, 3).getFormulas();
+  var updated = []; var temp; var current; var first = true;
+  
+  for (var i = 0; i < formulas[0].length; i++) {
+    updated[i] = "=SUM(";
+    for (var j = 0; j < sheets.length; j++) {
+      current = sheets[j].getSheetName().toLowerCase();
+      if (current != "summary" && current != "master" && current != "raw" && current != "list" && current != "calc") {
+        if (first) { updated[i] += "'" + sheets[j].getSheetName() + "'!$AB" + (i+7); first = false; }
+        else { updated[i] += ",'" + sheets[j].getSheetName() + "'!$AB" + (i+7); }
+        if (j+1 >= sheets.length) { updated[i] += ")"; }
+      }
+    }
+  }
+  sheet.getRange(9, 6, 1, updated.length).setValues([updated]);
+}
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+       
+       
+       
+       
+       
+       
+       
