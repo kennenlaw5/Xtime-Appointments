@@ -1,28 +1,46 @@
 function import(target) {
-  // created by Sean Lowe, 6/27/18
+  // Version 1.0 created by Sean Lowe, 6/27/18
+  //  Version 2.0 created by Kennen Lawrence
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ui = SpreadsheetApp.getUi();
   //target = ss.getSheetByName("testSheet"); // uncomment this line for testing purposes
   var source = ss.getSheetByName("Raw");
-  var range = source.getRange(1, 1, source.getLastRow(), 17).getValues();
-  Logger.log(range);
+  var range = source.getRange(1, 1, source.getLastRow(), source.getLastColumn()).getValues();
   var arr = [];
+  var order = ["Confirmation Key :","Appt Time :","Promise Time :","Customer :","Email :","Cell :"//Cell, Home, and Work
+               ,"Year/Make/Model/Mileage :"/*Separated By year, make, and model*/,"VIN :","Transportation Type :","Creation Type :","Notes :","Labor Op","Service","Complaint"
+               ,"DMS :","Status :","Advisor :"];
   var count = 0;
   var check = false;
   var str;
-  for (var i = 0; i < range.length; i++) {
-    if ((range[i] == undefined || range[i][0] == "") 
-        && (range[i+1] == undefined || range[i+1][0] == "") 
-        && (range[i+2] == undefined || range[i+2][0] == "") 
-        && (range[i+3] == undefined || range[i+3][0] == "")) { break; }
-    else {
-      if (range[i][0] != 0 && range[i][0] != "Confirmation Key" && range[i][0] != "") {
-        arr[count]=[];
-        for (var j = 0; j < range[i].length; j++) {
-          arr[count][j] = range[i][j];
+  
+  for (var k = 0; k < order.length; k++) {
+    check = false;
+    for (var i = 0; i < range[0].length && !check; i++) {
+      if (range[0][i] == order[k]) {
+        check = true;
+        for (var j = 0; j < range.length; j++) {
+          if (arr[j] == undefined) { arr[j]=[]; }
+          if (j ==0) {
+            arr[j][k] = order[k];
+          } else if (k == 5) {
+            arr[j][k] = "";
+            if (range[j][i] != "" && range[j][i] != undefined) {
+              arr[j][k] += "CELL: " + range[j][i];
+            } else if (range[j][i+1] != "" && range[j][i+1] != undefined) {
+              arr[j][k] += " HOME: " + range[j][i+1];
+            } else if (range[j][i+2] != "" && range[j][i+2] != undefined)
+              arr[j][k] += " WORK: " + range[j][i+2];
+          } else if (k == 6) {
+            arr[j][k] = range[j][i].replace("                          ","");
+          } else {
+            arr[j][k] = range[j][i];
+          }
         }
         count++;
       }
     }
+    if (!check) { ui.alert('ERROR!', 'Unable to find "' + order[k] + '" in sheet "Raw". Notify Kennen of this issue.', ui.Button.OK); return; }
   }
   range = ss.getSheetByName("List").getRange(2, 26, ss.getSheetByName("List").getLastRow()-2).getValues();
   for (i = 0; i < arr.length-1; i++) {
@@ -38,7 +56,7 @@ function import(target) {
       else if ((arr[i+1] != undefined && arr[i][7] == arr[i+1][7]) || arr[i+1][7] == "" ) { arr.splice(i+1, 1); i--; } // remove duplicate VIN appointments
     }
   }
-  target.getRange(2, 1, arr.length, 17).setValues(arr);
+  target.getRange(2, 1, arr.length, arr[0].length).setValues(arr);
 }
 
 function newSheet() {
